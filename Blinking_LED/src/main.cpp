@@ -15,11 +15,11 @@ void led_toggle()
 {
     if (GPIOC->ODR & (1 << 13))
     {
-        GPIOC->BRR = GPIOC->BRR | (1 << 13);
+        GPIOC->BRR |= (1 << 13);
     }
     else
     {
-        GPIOC->BSRR = GPIOC->BSRR | (1 << 13);
+        GPIOC->BSRR |= (1 << 13);
     }
 }
 
