@@ -6,9 +6,11 @@
  * @brief Clock control register (RCC_CR)
  * 
  */
-#define PLLON_MASK_BIT          (1 << 25)
+#define PLLRDY_MASK_BIT         (1 << 25)
+#define PLLON_MASK_BIT          (1 << 24)
 #define CSSON_MASK_BIT          (1 << 19)
 #define HSEBYP_MASK_BIT         (1 << 18)
+#define HSERDY_MASK_BIT         (1 << 17)
 #define HSEON_MASK_BIT          (1 << 16)
 #define HSION_MASK_BIT          1
 #define CRREG_MASK_BITS         (PLLON_MASK_BIT | CSSON_MASK_BIT |\
