@@ -3,7 +3,7 @@
 #include "stm32f103xb.h"
 
 /**
- * @brief Clock control register (RCC_CR
+ * @brief Clock control register (RCC_CR)
  * 
  */
 #define PLLON_MASK_BIT          (1 << 25)
