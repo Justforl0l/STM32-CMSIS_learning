@@ -9,11 +9,10 @@ void mcu_init()
 
 void clock_init()
 {
+    // TODO: Понять как отключить HSI
     /* Включаем HSE как источник тактирования и ждем
        пока HSE не будет готов */
     RCC->CR |= RCC_CR_HSEON;
-    RCC->CR &= ~RCC_CR_HSION;
-    while (!(RCC->CR &= RCC_CR_HSERDY));
     // Настройка PLL, множитель 9, частота 8 * 9 = 72 МГц
     RCC->CFGR |= ((1 << 20) | (1 << 19) | (1 << 18) | (1 << 16));
     // Включаем PLL и ждём его готовности
@@ -29,6 +28,7 @@ void clock_init()
     // Переключение SYSCLK на PLL и ожидание готовности
     RCC->CFGR |= RCC_CFGR_SW_PLL;
     while (!(RCC->CFGR &= RCC_CFGR_SWS_PLL));
+    RCC->CR &= ~RCC_CR_HSION;
     // Обновление SystemCoreClock
     SystemCoreClockUpdate();
 
