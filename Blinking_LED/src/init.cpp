@@ -9,7 +9,6 @@ void mcu_init()
 
 void clock_init()
 {
-    // TODO: Понять как отключить HSI
     /* Включаем HSE как источник тактирования и ждем
        пока HSE не будет готов */
     RCC->CR |= RCC_CR_HSEON;
@@ -17,7 +16,7 @@ void clock_init()
     RCC->CFGR |= ((1 << 20) | (1 << 19) | (1 << 18) | (1 << 16));
     // Включаем PLL и ждём его готовности
     RCC->CR |= RCC_CR_PLLON;
-    while (!(RCC->CR &= RCC_CR_PLLRDY));
+    while (!(RCC->CR & RCC_CR_PLLRDY));
     // Настройка и включение буфера Flash-памяти
     FLASH->ACR |= (1 << 1);
     // Установка предделителей шин:
@@ -27,16 +26,10 @@ void clock_init()
     RCC->CFGR |= (1 << 10);
     // Переключение SYSCLK на PLL и ожидание готовности
     RCC->CFGR |= RCC_CFGR_SW_PLL;
-    while (!(RCC->CFGR &= RCC_CFGR_SWS_PLL));
+    while (!(RCC->CFGR & RCC_CFGR_SWS_PLL));
     RCC->CR &= ~RCC_CR_HSION;
     // Обновление SystemCoreClock
     SystemCoreClockUpdate();
-
-    /*// Настраиваем тактирование микроконтроллера
-    RCC->CFGR = (RCC->CFGR & ~CFGRREG_MASK_BITS) | ((1 << 20) | (1 << 19) |
-                 (1 << 18) | (1 << 16) | (1 << 10) | (1 << 1));
-    // Включаем PLL и HSE
-    RCC->CR = (RCC->CR & ~CRREG_MASK_BITS) | ((1 << 24) | (1 << 16));*/
 }
 
 void gpio_init()
