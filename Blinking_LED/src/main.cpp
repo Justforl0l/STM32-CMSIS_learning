@@ -6,7 +6,8 @@ int main()
     
     while (1)
     {
-        __NOP();
+        led_toggle();
+        delay(1000);
     }
 }
 
@@ -22,12 +23,13 @@ void led_toggle()
     }
 }
 
-void delay(uint8_t delay_ms)
+void delay(uint32_t delay_ms)
 {
-    return;
+    uint32_t timeStamp = TICK;
+    while (TICK - timeStamp < delay_ms);
 }
 
 void SysTick_Handler()
 {
-    led_toggle();
+    TICK++;
 }

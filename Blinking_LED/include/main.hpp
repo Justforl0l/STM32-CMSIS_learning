@@ -3,8 +3,10 @@
 #include "stm32f103xb.h"
 #include "init.hpp"
 
+volatile uint32_t TICK = 0;
+
 void led_toggle();
-void delay(uint8_t delay_ms);
+void delay(uint32_t delay_ms);
 
 #ifdef __cplusplus
 extern "C"
