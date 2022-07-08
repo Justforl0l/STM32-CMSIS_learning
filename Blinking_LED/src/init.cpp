@@ -4,7 +4,7 @@ void mcu_init()
 {
     clock_init();
     gpio_init();
-    systick_init();
+    SysTick_Config(TimerTick);
 }
 
 void clock_init()
@@ -39,14 +39,4 @@ void gpio_init()
     // Настраиваем PC13 как GPIO output push-pull
     GPIOC->CRH = (GPIOC->CRH & ~(CNF13_MASK_BITS | MODE13_MASK_BITS)) |
                  (1 << 21);
-}
-
-void systick_init()
-{
-    SysTick->LOAD = TimerTick;
-    SysTick->VAL = TimerTick;
-
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |
-                    SysTick_CTRL_TICKINT_Msk |
-                    SysTick_CTRL_ENABLE_Msk;
 }

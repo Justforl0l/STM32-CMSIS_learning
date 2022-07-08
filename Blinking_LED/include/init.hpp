@@ -63,9 +63,8 @@
 #define CNF13_MASK_BITS         ((1 << 23) | (1 << 22))
 #define MODE13_MASK_BITS        ((1 << 21) | (1 << 20))
 
-#define TimerTick               F_CPU/1000 - 1
+#define TimerTick               (F_CPU / 1000) - 1
 
 void mcu_init();
 void clock_init();
 void gpio_init();
-void systick_init();
