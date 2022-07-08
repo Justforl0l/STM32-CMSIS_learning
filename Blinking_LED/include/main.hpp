@@ -12,7 +12,6 @@ extern "C"
     #endif // __cplusplus
 
     void SysTick_Handler();
-    void HardFault_Handler();
 
     #ifdef __cplusplus
 }
