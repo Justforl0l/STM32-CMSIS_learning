@@ -16,8 +16,7 @@ int main()
             {
                 TxBuffer[j] = i * 4 + j;
             }
-            SPI_SendData(SPI2, TxBuffer, 4);
-            SPI_RecieveData(SPI2, RxBuffer, 4);
+            SPI_SendRecieveData(SPI2, TxBuffer, RxBuffer, 4);
         }
     }
 }
