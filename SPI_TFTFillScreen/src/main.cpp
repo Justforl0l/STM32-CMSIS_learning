@@ -80,7 +80,7 @@ void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList)
         numArgs = *commandList++;
         ms = numArgs & ST7735S_CMD_DELAY;
         numArgs &= ~ST7735S_CMD_DELAY;
-        sendCommand(SPI2, command, commandList, numArgs);
+        sendCommand(SPIx, command, commandList, numArgs);
         commandList += numArgs;
 
         if (ms)
