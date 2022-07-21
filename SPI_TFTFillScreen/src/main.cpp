@@ -99,15 +99,19 @@ void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
                  const uint8_t *address, uint8_t numArgs)
 {
     TFT_PORT_DC->BRR |= GPIO_BRR_BR2;           // Command mode
+    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
     SPI_SendData(SPIx, &command, 1);
     while (SPIx->SR & SPI_SR_BSY_Msk);
+    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
     if (numArgs)
     {
         while (numArgs)
         {
             TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
+            TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
             SPI_SendData(SPIx, (uint8_t *)address, 1);
             while (SPIx->SR & SPI_SR_BSY_Msk);
+            TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
             address++;
             numArgs--;
         }
@@ -145,9 +149,11 @@ void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
     uint8_t lsb_color = color & 0xFF;
 
     TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
+    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
     SPI_SendData(SPIx, &msb_color, count);
     SPI_SendData(SPIx, &lsb_color, count);
     while (SPIx->SR & SPI_SR_BSY_Msk);
+    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
 }
 
 void delay(uint32_t delay_ms)
