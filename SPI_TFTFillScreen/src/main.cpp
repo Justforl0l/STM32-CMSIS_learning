@@ -141,7 +141,13 @@ void fillScreen(SPI_TypeDef *SPIx, uint16_t color)
 
 void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
 {
-    __NOP();
+    uint8_t msb_color = color >> 8;
+    uint8_t lsb_color = color & 0xFF;
+
+    TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
+    SPI_SendData(SPIx, &msb_color, count);
+    SPI_SendData(SPIx, &lsb_color, count);
+    while (SPIx->SR & SPI_SR_BSY_Msk);
 }
 
 void delay(uint32_t delay_ms)
