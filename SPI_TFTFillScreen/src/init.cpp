@@ -22,7 +22,8 @@ void clock_init()
 
 void gpio_init()
 {
-    RCC->APB2ENR |= (RCC_APB2ENR_IOPBEN | RCC_APB2ENR_AFIOEN);
+    RCC->APB2ENR |= (RCC_APB2ENR_IOPBEN | RCC_APB2ENR_AFIOEN |
+                     RCC_APB2ENR_IOPAEN);
     GPIOB->CRH &= ~(GPIO_CRH_CNF13_Msk | GPIO_CRH_CNF14_Msk |
                     GPIO_CRH_CNF15_Msk | GPIO_CRH_CNF10_Msk);
     GPIOB->CRH |= (GPIO_CRH_MODE13_1 | GPIO_CRH_CNF13_1 |
