@@ -30,6 +30,10 @@ void gpio_init()
                    GPIO_CRH_MODE15_1 | GPIO_CRH_CNF15_1 |
                    GPIO_CRH_CNF10_1);
     GPIOB->BSRR |= (GPIO_BSRR_BS14 | GPIO_BSRR_BS10);
+    GPIOA->CRL &= ~(GPIO_CRL_CNF1_Msk | GPIO_CRL_CNF2_Msk |
+                    GPIO_CRL_CNF3_Msk | GPIO_CRL_CNF4_Msk);
+    GPIOA->CRL |= (GPIO_CRL_MODE1_1 | GPIO_CRL_MODE2_1 |
+                   GPIO_CRL_MODE3_1 | GPIO_CRL_MODE4_1);
 }
 
 void spi_init()
