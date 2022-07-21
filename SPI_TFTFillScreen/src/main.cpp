@@ -116,7 +116,14 @@ void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
 
 void ST7735_backlight(uint8_t on)
 {
-    __NOP();
+    if (on)
+    {
+        TFT_PORT_BLK->BSRR |= GPIO_BSRR_BS1;
+    }
+    else
+    {
+        TFT_PORT_BLK->BRR |= GPIO_BRR_BR1;
+    }
 }
 
 void fillScreen(SPI_TypeDef *SPIx, uint16_t color)
