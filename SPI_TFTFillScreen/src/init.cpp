@@ -18,6 +18,7 @@ void clock_init()
     RCC->CFGR |= RCC_CFGR_PPRE1_DIV2 | RCC_CFGR_SW_PLL;
     while (!(RCC->CFGR & RCC_CFGR_SWS_PLL));
     RCC->CR &= ~RCC_CR_HSION;
+    SystemCoreClockUpdate();
 }
 
 void gpio_init()
