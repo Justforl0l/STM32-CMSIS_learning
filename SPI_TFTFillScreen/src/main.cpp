@@ -70,7 +70,29 @@ void SysTick_Handler()
 
 void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList)
 {
-    __NOP();
+    uint8_t numCommands, command, numArgs;
+    uint16_t ms;
+
+    numCommands = *commandList++;
+    while (numCommands--)
+    {
+        command = *commandList++;
+        numArgs = *commandList++;
+        ms = numArgs & ST7735S_CMD_DELAY;
+        numArgs &= ~ST7735S_CMD_DELAY;
+        sendCommand(SPI2, command, commandList, numArgs);
+        commandList += numArgs;
+
+        if (ms)
+        {
+            ms = *commandList++;
+            if (ms == 255)
+            {
+                ms = 500;
+            }
+            delay(ms);
+        }
+    }
 }
 
 void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
