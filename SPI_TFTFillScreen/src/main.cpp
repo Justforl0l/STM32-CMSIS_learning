@@ -96,5 +96,6 @@ void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
 
 void delay(uint32_t delay_ms)
 {
-    __NOP();
+    uint32_t timeStamp = TICK;
+    while (TICK - timeStamp < delay_ms);
 }
