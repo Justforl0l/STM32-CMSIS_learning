@@ -98,7 +98,20 @@ void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList)
 void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
                  const uint8_t *address, uint8_t numArgs)
 {
-    __NOP();
+    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;           // Command mode
+    SPI_SendData(SPIx, &command, 1);
+    while (SPIx->SR & SPI_SR_BSY_Msk);
+    if (numArgs)
+    {
+        while (numArgs)
+        {
+            TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
+            SPI_SendData(SPIx, (uint8_t *)address, 1);
+            while (SPIx->SR & SPI_SR_BSY_Msk);
+            address++;
+            numArgs--;
+        }
+    }
 }
 
 void ST7735_backlight(uint8_t on)
