@@ -6,13 +6,13 @@
 #include "tft/commands.hpp"
 #include "tft/colors.hpp"
 
-#define TFT_PORT_BLK        GPIOA
-#define TFT_PORT_RST        GPIOA
-#define TFT_PORT_DC         GPIOA
-#define TFT_PORT_SCE        GPIOA
-#define TFT_PORT_MISO       GPIOB
-#define TFT_PORT_MOSI       GPIOB
-#define TFT_PORT_CLK        GPIOB
+#define TFT_PORT_BLK        GPIOA   // Pin 1
+#define TFT_PORT_RST        GPIOA   // Pin 4
+#define TFT_PORT_DC         GPIOA   // Pin 2
+#define TFT_PORT_SCE        GPIOA   // Pin 3
+#define TFT_PORT_MISO       GPIOB   // Pin 14
+#define TFT_PORT_MOSI       GPIOB   // Pin 15
+#define TFT_PORT_CLK        GPIOB   // Pin 13
 
 #define MADCTLGRAPHICS      0x6
 #define MADCTLBMP           0x2
