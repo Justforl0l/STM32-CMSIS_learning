@@ -128,7 +128,15 @@ void ST7735_backlight(uint8_t on)
 
 void fillScreen(SPI_TypeDef *SPIx, uint16_t color)
 {
-    __NOP();
+    uint8_t x, y;
+
+    for (x = 0; x < ST7735_WIDTH; x++)
+    {
+        for (y = 0; y < ST7735_HEIGHT; y++)
+        {
+            ST7735_pushColor(SPIx, color, 1);
+        }
+    }
 }
 
 void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
