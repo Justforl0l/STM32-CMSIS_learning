@@ -42,7 +42,7 @@ void gpio_init()
 void spi_init()
 {
     RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
-    SPI2->CR1 |= SPI_BaudRate_Prescaler_64;
+    SPI2->CR1 |= SPI_BaudRate_Prescaler_2;
     SPI2->CR1 &= ~(SPI_CR1_CPHA | SPI_CR1_CPOL |
                    SPI_CR1_DFF | SPI_CR1_LSBFIRST);
     SPI2->CR1 |= (SPI_CR1_SSM | SPI_CR1_SSI |
