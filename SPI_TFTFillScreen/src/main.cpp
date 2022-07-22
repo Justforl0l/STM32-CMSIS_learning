@@ -34,7 +34,7 @@ int main()
                 0x0E,
             ST7735S_CMD_INVOFF,     0,
             ST7735S_CMD_MADCTL,     1,
-                0x08,
+                0x00,
             ST7735S_CMD_COLMOD,     1,
                 0x05,
             ST7735S_CMD_CASET,      4,
@@ -49,8 +49,12 @@ int main()
                 255
         };
 
-    ST7735_init(SPI2, commandList);
+    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
+    TFT_PORT_RST->BRR |= GPIO_BRR_BR4;
+    delay(5);
+    TFT_PORT_RST->BSRR |= GPIO_BSRR_BS4;
     ST7735_backlight(1);
+    ST7735_init(SPI2, commandList);
 
     while (1)
     {
@@ -98,8 +102,8 @@ void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList)
 void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
                  const uint8_t *address, uint8_t numArgs)
 {
-    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;           // Command mode
     TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
+    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;           // Command mode
     SPI_SendData(SPIx, &command, 1);
     while (SPIx->SR & SPI_SR_BSY_Msk);
     TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
@@ -107,8 +111,8 @@ void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
     {
         while (numArgs)
         {
-            TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
             TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
+            TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
             SPI_SendData(SPIx, (uint8_t *)address, 1);
             while (SPIx->SR & SPI_SR_BSY_Msk);
             TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
@@ -134,6 +138,13 @@ void fillScreen(SPI_TypeDef *SPIx, uint16_t color)
 {
     uint8_t x, y;
 
+    uint8_t ramwr = ST7735S_CMD_RAMWR;
+    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
+    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;
+    SPI_SendData(SPIx, &ramwr, 1);
+    while (SPIx->SR & SPI_SR_BSY_Msk);
+    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
+
     for (x = 0; x < ST7735_WIDTH; x++)
     {
         for (y = 0; y < ST7735_HEIGHT; y++)
@@ -148,8 +159,8 @@ void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
     uint8_t msb_color = color >> 8;
     uint8_t lsb_color = color & 0xFF;
 
-    TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
     TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
+    TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
     SPI_SendData(SPIx, &msb_color, count);
     SPI_SendData(SPIx, &lsb_color, count);
     while (SPIx->SR & SPI_SR_BSY_Msk);
