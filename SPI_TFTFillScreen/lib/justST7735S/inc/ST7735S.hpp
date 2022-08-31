@@ -16,7 +16,7 @@ class JST7735S
         JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList);
         void initDisplay();
         void sendCommand(uint8_t command, const uint8_t *address,
-                             uint8_t numArgs);
+                         uint8_t numArgs);
         void toggleBacklight();
         void fillScreen(uint16_t color);
         void pushColor(uint16_t color, int count);
