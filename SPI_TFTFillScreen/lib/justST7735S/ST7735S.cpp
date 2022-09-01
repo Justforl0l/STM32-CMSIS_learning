@@ -11,19 +11,19 @@ void JST7735S::initDisplay()
     uint8_t numberOfCommands, command, numberOfArgs;
     uint16_t ms;
 
-    numberOfCommands = *this->_commandList;
+    numberOfCommands = *_commandList;
     while (numberOfCommands--)
     {
-        command = *this->_commandList++;
-        numberOfArgs = *this->_commandList++;
+        command = *_commandList++;
+        numberOfArgs = *_commandList++;
         ms = numberOfArgs & ST7735S_CMD_DELAY;
         numberOfArgs &= ~ST7735S_CMD_DELAY;
-        this->sendCommand(command, this->_commandList, numberOfArgs);
-        this->_commandList += numberOfArgs;
+        sendCommand(command, _commandList, numberOfArgs);
+        _commandList += numberOfArgs;
 
         if (ms)
         {
-            ms = *this->_commandList++;
+            ms = *_commandList++;
             if (ms == 255)
             {
                 ms = 500;
@@ -33,10 +33,23 @@ void JST7735S::initDisplay()
     }
 }
 
+// TODO: Подумать, как можно переписать метод (мне в принципе не нравиться как он написан)
 void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
                            uint8_t numArgs)
 {
-    __NOP();
+    setCommandMode();
+    SPI_SendData(_SPI, &command, 1);
+    waitUntilDataIsSent();
+}
+
+void JST7735S::setCommandMode()
+{
+    return;
+}
+
+void JST7735S::waitUntilDataIsSent()
+{
+    return;
 }
 
 void JST7735S::toggleBacklight()

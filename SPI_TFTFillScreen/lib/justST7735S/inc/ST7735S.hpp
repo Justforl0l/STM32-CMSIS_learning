@@ -17,6 +17,8 @@ class JST7735S
         void initDisplay();
         void sendCommand(uint8_t command, const uint8_t *address,
                          uint8_t numArgs);
+        void setCommandMode();
+        void waitUntilDataIsSent();
         void toggleBacklight();
         void fillScreen(uint16_t color);
         void pushColor(uint16_t color, int count);
