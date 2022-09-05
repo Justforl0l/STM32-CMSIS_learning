@@ -12,9 +12,9 @@ class JST7735S
     private:
         SPI_TypeDef *_SPI;
         const uint8_t *_commandList;
+        void _initDisplay();
     public:
         JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList);
-        void initDisplay();
         void sendCommand(uint8_t command, const uint8_t *address,
                          uint8_t numArgs);
         void setCommandMode();

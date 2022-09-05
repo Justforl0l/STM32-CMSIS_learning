@@ -6,7 +6,7 @@ JST7735S::JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList)
     this->_commandList = commandList;
 }
 
-void JST7735S::initDisplay()
+void JST7735S::_initDisplay()
 {
     uint8_t numberOfCommands, command, numberOfArgs;
     uint16_t ms;
