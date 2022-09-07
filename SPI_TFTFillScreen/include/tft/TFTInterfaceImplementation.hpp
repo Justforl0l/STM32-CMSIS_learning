@@ -2,18 +2,22 @@
 
 #include "stm32f103xb.h"
 
+#include "config.hpp"
 #include <inc/TFTInterface.hpp>
 
 class TFTInterfaceImplementation : public TFTInterface
 {
+    private:
+        SPI_TypeDef* _SPI;
+        
     public:
-        TFTInterfaceImplementation() = default;
-        void setCommandMode() override;
-        void setDataMode() override;
-        void waitUntilDataIsSent() override;
-        void toggleBacklight() override;
-        void selectDisplay() override;
-        void deselectDisplay() override;
+        TFTInterfaceImplementation(SPI_TypeDef* SPIx);
+        inline void setCommandMode() override;
+        inline void setDataMode() override;
+        inline void waitUntilDataIsSent() override;
+        inline void toggleBacklight() override;
+        inline void selectDisplay() override;
+        inline void deselectDisplay() override;
 
     protected:
         ~TFTInterfaceImplementation() = default;

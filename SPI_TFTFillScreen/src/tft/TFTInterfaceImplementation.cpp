@@ -1,31 +1,37 @@
 #include "tft/TFTInterfaceImplementation.hpp"
 
-void TFTInterfaceImplementation::setCommandMode()
+TFTInterfaceImplementation::TFTInterfaceImplementation(SPI_TypeDef* SPIx)
 {
-    return;
+    _SPI = SPIx;
 }
 
-void TFTInterfaceImplementation::setDataMode()
+inline void TFTInterfaceImplementation::setCommandMode()
 {
-    return;
+    TFT_PORT_DC->BRR |= TFT_PIN_DC;
 }
 
-void TFTInterfaceImplementation::waitUntilDataIsSent()
+inline void TFTInterfaceImplementation::setDataMode()
 {
-    return;
+    TFT_PORT_DC->BSRR |= TFT_PIN_DC;
 }
 
-void TFTInterfaceImplementation::toggleBacklight()
+inline void TFTInterfaceImplementation::waitUntilDataIsSent()
 {
-    return;
+    while (_SPI->SR & SPI_SR_BSY_Msk);
 }
 
-void TFTInterfaceImplementation::selectDisplay()
+inline void TFTInterfaceImplementation::toggleBacklight()
 {
-    return;
+    // TODO: Не забыть проинициализировать TFT_PORT_BLK->BRR в 1
+    TFT_PORT_BLK->BSRR ^= TFT_PIN_BLK;
 }
 
-void TFTInterfaceImplementation::deselectDisplay()
+inline void TFTInterfaceImplementation::selectDisplay()
 {
-    return;
+    TFT_PORT_SCE->BRR |= TFT_PIN_SCE;
+}
+
+inline void TFTInterfaceImplementation::deselectDisplay()
+{
+    TFT_PORT_SCE->BSRR |= TFT_PIN_SCE;
 }
