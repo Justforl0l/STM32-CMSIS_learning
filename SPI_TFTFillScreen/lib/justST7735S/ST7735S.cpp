@@ -1,9 +1,11 @@
 #include <inc/ST7735S.hpp>
 
-JST7735S::JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList)
+JST7735S::JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList,
+                   TFTInterface* interfaceImplementation)
 {
-    this->_SPI = SPIx;
-    this->_commandList = commandList;
+    _SPI = SPIx;
+    _commandList = commandList;
+    _interfaceImplementation = interfaceImplementation;
     _initDisplay();
 }
 
@@ -34,28 +36,32 @@ void JST7735S::_initDisplay()
     }
 }
 
-// TODO: Подумать, как можно переписать метод (мне в принципе не нравиться как он написан)
 void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
-                           uint8_t numArgs)
+                           uint8_t numberOfArgs)
 {
-    setCommandMode();
+    _interfaceImplementation->selectDisplay();
+    _interfaceImplementation->setCommandMode();
     SPI_SendData(_SPI, &command, 1);
-    waitUntilDataIsSent();
-}
-
-void JST7735S::setCommandMode()
-{
-    return;
-}
-
-void JST7735S::waitUntilDataIsSent()
-{
-    return;
+    _interfaceImplementation->waitUntilDataIsSent();
+    _interfaceImplementation->deselectDisplay();
+    if (numberOfArgs)
+    {
+        while (numberOfArgs)
+        {
+            _interfaceImplementation->selectDisplay();
+            _interfaceImplementation->setDataMode();
+            SPI_SendData(_SPI, (uint8_t *)address, 1);
+            _interfaceImplementation->waitUntilDataIsSent();
+            _interfaceImplementation->deselectDisplay();
+            address++;
+            numberOfArgs--;
+        }
+    }
 }
 
 void JST7735S::toggleBacklight()
 {
-    __NOP();
+    _interfaceImplementation->toggleBacklight();
 }
 
 void JST7735S::fillScreen(uint16_t color)
@@ -63,7 +69,15 @@ void JST7735S::fillScreen(uint16_t color)
     __NOP();
 }
 
-void JST7735S::pushColor(uint16_t color, int count)
+void JST7735S::pushColor(uint16_t color, uint8_t count)
 {
-    __NOP();
+    uint8_t msb_color = color >> 8;
+    uint8_t lsb_color = color & 0xFF;
+
+    _interfaceImplementation->selectDisplay();
+    _interfaceImplementation->setDataMode();
+    SPI_SendData(_SPI, &msb_color, count);
+    SPI_SendData(_SPI, &lsb_color, count);
+    _interfaceImplementation->waitUntilDataIsSent();
+    _interfaceImplementation->deselectDisplay();
 }
