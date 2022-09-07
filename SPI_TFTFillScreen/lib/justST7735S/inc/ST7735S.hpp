@@ -2,6 +2,7 @@
 
 #include "stm32f103xb.h"
 
+#include "config.hpp"
 #include "colors.hpp"
 #include "commands.hpp"
 #include "TFTInterface.hpp"
