@@ -9,6 +9,7 @@
 1. Blinking_LED
 2. SPI_Loopback
 3. SPI_TFTFillScreen
+4. SPI_TFTFillScreenWithDMA
 
 # Описание проектов
 ## Blinking_LED
@@ -19,3 +20,7 @@
 
 ## SPI_TFTFillScreen
 Заливка TFT экрана (контроллер ST7735) на 1 с поочередно красным, зеленым и синим цветами через SPI.
+
+## SPI_TFTFillScreenWithDMA
+Заливка TFT экрана (контроллер ST7735) на 1с с поочередно красным, зеленым и синим цветами через SPI
+с использованием DMA.
