@@ -26,7 +26,7 @@ void JST7735S::_initDisplay()
     uint8_t numberOfCommands, command, numberOfArgs;
     uint16_t ms;
 
-    numberOfCommands = *_commandList;
+    numberOfCommands = *_commandList++;
     while (numberOfCommands--)
     {
         command = *_commandList++;
@@ -83,7 +83,24 @@ void JST7735S::toggleBacklight()
 
 void JST7735S::fillScreen(uint16_t color)
 {
-    __NOP();
+    uint8_t x, y;
+
+    uint8_t ramwr = ST7735S_CMD_RAMWR;
+    _interfaceImplementation->selectDisplay();
+    _interfaceImplementation->setCommandMode();
+    SPI_SendData(_SPI, &ramwr, 1);
+    _interfaceImplementation->waitUntilDataIsSent();
+    _interfaceImplementation->deselectDisplay();
+
+    for (x = 0; x < ST7735_WIDTH; x++)
+    {
+        for (y = 0; y < ST7735_HEIGHT; y++)
+        {
+            pushColor(color, 1);
+        }
+        
+    }
+    
 }
 
 void JST7735S::pushColor(uint16_t color, uint8_t count)
