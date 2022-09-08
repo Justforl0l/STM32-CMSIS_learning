@@ -4,7 +4,8 @@
 
 #define TFT_PORT_BLK        GPIOA
 #define TFT_PIN_BLK_POSITION        1
-#define TFT_PIN_BLK         (0x1UL << TFT_PIN_BLK_POSITION)
+#define TFT_PIN_BLK_BSRR_BS1        (0x1UL << TFT_PIN_BLK_POSITION)
+#define TFT_PIN_BLK_BSRR_BR1        (0x1UL << (TFT_PIN_BLK_POSITION + 16))
 
 #define TFT_PORT_RST        GPIOA
 #define TFT_PIN_RST_POSITION        4
