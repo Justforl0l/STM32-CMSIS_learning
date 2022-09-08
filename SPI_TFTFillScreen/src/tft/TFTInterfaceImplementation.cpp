@@ -22,7 +22,6 @@ inline void TFTInterfaceImplementation::waitUntilDataIsSent()
 
 inline void TFTInterfaceImplementation::toggleBacklight()
 {
-    // TODO: Не забыть проинициализировать BR1 в TFT_PORT_BLK->BSRR в 1
     TFT_PORT_BLK->BSRR ^= TFT_PIN_BLK_BSRR_BS1;
 }
 

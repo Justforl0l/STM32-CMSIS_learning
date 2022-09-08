@@ -29,6 +29,7 @@ class JST7735S
 
         void (*_delay)(uint32_t);
         void _initDisplay();
+        inline void _initBacklightPin();
 
     public:
         JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList,

@@ -8,6 +8,8 @@ JST7735S::JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList,
     _interfaceImplementation = interfaceImplementation;
     _delay = delay;
     _initDisplay();
+    _initBacklightPin();
+    toggleBacklight();
 }
 
 void JST7735S::_initDisplay()
@@ -35,6 +37,11 @@ void JST7735S::_initDisplay()
             _delay(ms);
         }
     }
+}
+
+inline void _initBacklightPin()
+{
+    TFT_PORT_BLK->BSRR |= TFT_PIN_BLK_BSRR_BR1;
 }
 
 void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
