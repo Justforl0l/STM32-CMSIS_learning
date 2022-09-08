@@ -1,11 +1,12 @@
 #include <inc/ST7735S.hpp>
 
 JST7735S::JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList,
-                   TFTInterface* interfaceImplementation)
+                   TFTInterface* interfaceImplementation, void(*delay)(uint32_t))
 {
     _SPI = SPIx;
     _commandList = commandList;
     _interfaceImplementation = interfaceImplementation;
+    _delay = delay;
     _initDisplay();
 }
 
@@ -31,7 +32,7 @@ void JST7735S::_initDisplay()
             {
                 ms = 500;
             }
-            // TODO: Нужно передать функцию задержки
+            _delay(ms);
         }
     }
 }

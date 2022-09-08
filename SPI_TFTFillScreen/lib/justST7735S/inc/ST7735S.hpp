@@ -27,11 +27,12 @@ class JST7735S
         const uint8_t* _commandList;
         TFTInterface* _interfaceImplementation;
 
+        void (*_delay)(uint32_t);
         void _initDisplay();
 
     public:
         JST7735S(SPI_TypeDef *SPIx, const uint8_t *commandList,
-                 TFTInterface* interfaceImplementation);
+                 TFTInterface* interfaceImplementation, void(*delay)(uint32_t));
         void sendCommand(uint8_t command, const uint8_t *address,
                          uint8_t numberOfArgs);
         void setCommandMode();
