@@ -8,6 +8,7 @@
 # Список проектов
 1. Blinking_LED
 2. SPI_Loopback
+3. SPI_TFTFillScreen
 
 # Описание проектов
 ## Blinking_LED
