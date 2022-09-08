@@ -28,6 +28,7 @@ class JST7735S
         TFTInterface* _interfaceImplementation;
 
         void (*_delay)(uint32_t);
+        void _preInitDisplay();
         void _initDisplay();
         inline void _initBacklightPin();
 
