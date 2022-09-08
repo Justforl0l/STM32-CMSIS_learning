@@ -49,20 +49,17 @@ int main()
                 255
         };
 
-    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
-    TFT_PORT_RST->BRR |= GPIO_BRR_BR4;
-    delay(5);
-    TFT_PORT_RST->BSRR |= GPIO_BSRR_BS4;
-    ST7735_backlight(1);
-    ST7735_init(SPI2, commandList);
+    JST7735S* display = new JST7735S(SPI2, commandList,
+                                     new TFTInterfaceImplementation(SPI2),
+                                     delay);
 
     while (1)
     {
-        fillScreen(SPI2, _RED);
+        display->fillScreen(_RED);
         delay(1000);
-        fillScreen(SPI2, _GREEN);
+        display->fillScreen(_GREEN);
         delay(1000);
-        fillScreen(SPI2, _BLUE);
+        display->fillScreen(_BLUE);
         delay(1000);
     }
 }
@@ -70,101 +67,6 @@ int main()
 void SysTick_Handler()
 {
     TICK++;
-}
-
-void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList)
-{
-    uint8_t numCommands, command, numArgs;
-    uint16_t ms;
-
-    numCommands = *commandList++;
-    while (numCommands--)
-    {
-        command = *commandList++;
-        numArgs = *commandList++;
-        ms = numArgs & ST7735S_CMD_DELAY;
-        numArgs &= ~ST7735S_CMD_DELAY;
-        sendCommand(SPIx, command, commandList, numArgs);
-        commandList += numArgs;
-
-        if (ms)
-        {
-            ms = *commandList++;
-            if (ms == 255)
-            {
-                ms = 500;
-            }
-            delay(ms);
-        }
-    }
-}
-
-void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
-                 const uint8_t *address, uint8_t numArgs)
-{
-    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
-    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;           // Command mode
-    SPI_SendData(SPIx, &command, 1);
-    while (SPIx->SR & SPI_SR_BSY_Msk);
-    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
-    if (numArgs)
-    {
-        while (numArgs)
-        {
-            TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
-            TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
-            SPI_SendData(SPIx, (uint8_t *)address, 1);
-            while (SPIx->SR & SPI_SR_BSY_Msk);
-            TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
-            address++;
-            numArgs--;
-        }
-    }
-}
-
-void ST7735_backlight(uint8_t on)
-{
-    if (on)
-    {
-        TFT_PORT_BLK->BSRR |= GPIO_BSRR_BS1;
-    }
-    else
-    {
-        TFT_PORT_BLK->BRR |= GPIO_BRR_BR1;
-    }
-}
-
-void fillScreen(SPI_TypeDef *SPIx, uint16_t color)
-{
-    uint8_t x, y;
-
-    uint8_t ramwr = ST7735S_CMD_RAMWR;
-    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
-    TFT_PORT_DC->BRR |= GPIO_BRR_BR2;
-    SPI_SendData(SPIx, &ramwr, 1);
-    while (SPIx->SR & SPI_SR_BSY_Msk);
-    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
-
-    for (x = 0; x < ST7735_WIDTH; x++)
-    {
-        for (y = 0; y < ST7735_HEIGHT; y++)
-        {
-            ST7735_pushColor(SPIx, color, 1);
-        }
-    }
-}
-
-void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count)
-{
-    uint8_t msb_color = color >> 8;
-    uint8_t lsb_color = color & 0xFF;
-
-    TFT_PORT_SCE-> BRR |= GPIO_BRR_BR3;
-    TFT_PORT_DC->BSRR |= GPIO_BSRR_BS2;
-    SPI_SendData(SPIx, &msb_color, count);
-    SPI_SendData(SPIx, &lsb_color, count);
-    while (SPIx->SR & SPI_SR_BSY_Msk);
-    TFT_PORT_SCE-> BSRR |= GPIO_BSRR_BS3;
 }
 
 void delay(uint32_t delay_ms)

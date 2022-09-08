@@ -7,6 +7,8 @@
 #include "utils/spi.hpp"
 #include "tft/commands.hpp"
 #include "tft/colors.hpp"
+#include "tft/TFTInterfaceImplementation.hpp"
+#include <inc/ST7735S.hpp>
 
 #define MADCTLGRAPHICS      0x6
 #define MADCTLBMP           0x2
