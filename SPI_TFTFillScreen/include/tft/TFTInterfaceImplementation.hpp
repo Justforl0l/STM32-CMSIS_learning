@@ -18,6 +18,8 @@ class TFTInterfaceImplementation : public TFTInterface
         inline void toggleBacklight() override;
         inline void selectDisplay() override;
         inline void deselectDisplay() override;
+        inline void resetDisplay() override;
+        inline void enableDisplay() override;
 
     protected:
         ~TFTInterfaceImplementation() = default;

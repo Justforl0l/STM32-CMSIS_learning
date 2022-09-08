@@ -34,3 +34,13 @@ inline void TFTInterfaceImplementation::deselectDisplay()
 {
     TFT_PORT_SCE->BSRR |= TFT_PIN_SCE;
 }
+
+inline void resetDisplay()
+{
+    TFT_PORT_RST->BRR |= TFT_PIN_RST;
+}
+
+inline void enableDisplay()
+{
+    TFT_PORT_RST->BSRR |= TFT_PIN_RST;
+}
