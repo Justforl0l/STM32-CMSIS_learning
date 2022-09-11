@@ -5,14 +5,14 @@
 #include "config.hpp"
 #include "TFTBaseInterfaceImpl.hpp"
 
-class TFT8BitMode : public TFTBaseInterfaceImpl
+class TFT16BitMode : public TFTBaseInterfaceImpl
 {
     public:
-        TFT8BitMode(SPI_TypeDef* SPIx) : TFTBaseInterfaceImpl(SPIx){};
+        TFT16BitMode(SPI_TypeDef* SPIx) : TFTBaseInterfaceImpl(SPIx){};
         inline void sendData(uint16_t* data, uint8_t count) override;
 };
 
-inline void TFT8BitMode::sendData(uint16_t* data, uint8_t count)
+inline void TFT16BitMode::sendData(uint16_t* data, uint8_t count)
 {
     while (!count)
     {

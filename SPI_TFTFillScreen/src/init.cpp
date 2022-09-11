@@ -45,6 +45,9 @@ void spi_init()
     SPI2->CR1 |= SPI_BaudRate_Prescaler_2;
     SPI2->CR1 &= ~(SPI_CR1_CPHA | SPI_CR1_CPOL |
                    SPI_CR1_DFF | SPI_CR1_LSBFIRST);
+    #if (_16BIT_MODE == 1)
+        SPI2->CR |= SPI_CR1_DFF;
+    #endif
     SPI2->CR1 |= (SPI_CR1_SSM | SPI_CR1_SSI |
                   SPI_CR1_MSTR | SPI_CR1_SPE);
 }
