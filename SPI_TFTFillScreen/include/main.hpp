@@ -24,12 +24,6 @@
 
 volatile uint32_t TICK = 0;
 
-void ST7735_init(SPI_TypeDef *SPIx, const uint8_t *commandList);
-void sendCommand(SPI_TypeDef *SPIx, uint8_t command,
-                 const uint8_t *address, uint8_t numArgs);
-void ST7735_backlight(uint8_t on);
-void fillScreen(SPI_TypeDef *SPIx, uint16_t color);
-void ST7735_pushColor(SPI_TypeDef *SPIx, uint16_t color, int count);
 void delay(uint32_t delay_ms);
 
 #ifdef __cplusplus
