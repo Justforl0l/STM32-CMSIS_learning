@@ -7,7 +7,13 @@
 #include "utils/spi.hpp"
 #include "tft/commands.hpp"
 #include "tft/colors.hpp"
-#include "tft/TFTInterfaceImplementation.hpp"
+
+#if (_8BIT_MODE == 1)
+    #include "tft/TFT8BitMode.hpp"
+#elif (_16BIT_MODE == 1)
+    #include "tft/TFT16BitMode.hpp"
+#endif
+
 #include <inc/ST7735S.hpp>
 
 #define MADCTLGRAPHICS      0x6

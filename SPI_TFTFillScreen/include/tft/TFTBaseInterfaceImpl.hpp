@@ -5,13 +5,10 @@
 #include "config.hpp"
 #include <inc/TFTInterface.hpp>
 
-class TFTInterfaceImplementation : public TFTInterface
+class TFTBaseInterfaceImpl : public TFTInterface
 {
-    private:
-        SPI_TypeDef* _SPI;
-        
     public:
-        TFTInterfaceImplementation(SPI_TypeDef* SPIx);
+        TFTBaseInterfaceImpl(SPI_TypeDef* SPIx);
         inline void setCommandMode() override;
         inline void setDataMode() override;
         inline void waitUntilDataIsSent() override;
@@ -20,52 +17,54 @@ class TFTInterfaceImplementation : public TFTInterface
         inline void deselectDisplay() override;
         inline void resetDisplay() override;
         inline void enableDisplay() override;
+        virtual void sendData(uint16_t* data, uint8_t count) = 0;
 
     protected:
-        ~TFTInterfaceImplementation() = default;
+        SPI_TypeDef* _SPI;
+        ~TFTBaseInterfaceImpl() = default;
 };
 
-TFTInterfaceImplementation::TFTInterfaceImplementation(SPI_TypeDef* SPIx)
+TFTBaseInterfaceImpl::TFTBaseInterfaceImpl(SPI_TypeDef* SPIx)
 {
     _SPI = SPIx;
 }
 
-inline void TFTInterfaceImplementation::setCommandMode()
+inline void TFTBaseInterfaceImpl::setCommandMode()
 {
     TFT_PORT_DC->BRR |= TFT_PIN_DC;
 }
 
-inline void TFTInterfaceImplementation::setDataMode()
+inline void TFTBaseInterfaceImpl::setDataMode()
 {
     TFT_PORT_DC->BSRR |= TFT_PIN_DC;
 }
 
-inline void TFTInterfaceImplementation::waitUntilDataIsSent()
+inline void TFTBaseInterfaceImpl::waitUntilDataIsSent()
 {
     while (_SPI->SR & SPI_SR_BSY_Msk);
 }
 
-inline void TFTInterfaceImplementation::toggleBacklight()
+inline void TFTBaseInterfaceImpl::toggleBacklight()
 {
     TFT_PORT_BLK->BSRR ^= TFT_PIN_BLK_BSRR_BS1;
 }
 
-inline void TFTInterfaceImplementation::selectDisplay()
+inline void TFTBaseInterfaceImpl::selectDisplay()
 {
     TFT_PORT_SCE->BRR |= TFT_PIN_SCE;
 }
 
-inline void TFTInterfaceImplementation::deselectDisplay()
+inline void TFTBaseInterfaceImpl::deselectDisplay()
 {
     TFT_PORT_SCE->BSRR |= TFT_PIN_SCE;
 }
 
-inline void TFTInterfaceImplementation::resetDisplay()
+inline void TFTBaseInterfaceImpl::resetDisplay()
 {
     TFT_PORT_RST->BRR |= TFT_PIN_RST;
 }
 
-inline void TFTInterfaceImplementation::enableDisplay()
+inline void TFTBaseInterfaceImpl::enableDisplay()
 {
     TFT_PORT_RST->BSRR |= TFT_PIN_RST;
 }
