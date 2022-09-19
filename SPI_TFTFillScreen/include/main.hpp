@@ -4,9 +4,6 @@
 
 #include "config.hpp"
 #include "init.hpp"
-#include "utils/spi.hpp"
-#include "tft/commands.hpp"
-#include "tft/colors.hpp"
 
 #if (_8BIT_MODE == 1)
     #include "tft/TFT8BitMode.hpp"

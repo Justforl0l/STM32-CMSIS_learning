@@ -6,7 +6,6 @@
 #include "colors.hpp"
 #include "commands.hpp"
 #include "TFTInterface.hpp"
-#include "utils/spi.hpp"
 
 #ifndef ST7735_WIDTH
     #define ST7735_WIDTH    128
@@ -43,3 +42,8 @@ class JST7735S
         void fillScreen(uint16_t color);
         void pushColor(uint16_t color, uint8_t count);
 };
+
+inline void JST7735S::_initBacklightPin()
+{
+    TFT_PORT_BLK->BSRR |= TFT_PIN_BLK_BSRR_BR1;
+}

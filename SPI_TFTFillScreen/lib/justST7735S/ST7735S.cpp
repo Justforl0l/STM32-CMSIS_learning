@@ -48,17 +48,12 @@ void JST7735S::_initDisplay()
     }
 }
 
-inline void JST7735S::_initBacklightPin()
-{
-    TFT_PORT_BLK->BSRR |= TFT_PIN_BLK_BSRR_BR1;
-}
-
 void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
                            uint8_t numberOfArgs)
 {
     _interfaceImplementation->selectDisplay();
     _interfaceImplementation->setCommandMode();
-    SPI_SendData(_SPI, &command, 1);
+    _interfaceImplementation->sendData((uint16_t *)&command, 1);
     _interfaceImplementation->waitUntilDataIsSent();
     _interfaceImplementation->deselectDisplay();
     if (numberOfArgs)
@@ -67,7 +62,7 @@ void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
         {
             _interfaceImplementation->selectDisplay();
             _interfaceImplementation->setDataMode();
-            SPI_SendData(_SPI, (uint8_t *)address, 1);
+            _interfaceImplementation->sendData((uint16_t *)address, 1);
             _interfaceImplementation->waitUntilDataIsSent();
             _interfaceImplementation->deselectDisplay();
             address++;
@@ -88,7 +83,7 @@ void JST7735S::fillScreen(uint16_t color)
     uint8_t ramwr = ST7735S_CMD_RAMWR;
     _interfaceImplementation->selectDisplay();
     _interfaceImplementation->setCommandMode();
-    SPI_SendData(_SPI, &ramwr, 1);
+    _interfaceImplementation->sendData((uint16_t *)&ramwr, 1);
     _interfaceImplementation->waitUntilDataIsSent();
     _interfaceImplementation->deselectDisplay();
 
@@ -105,13 +100,9 @@ void JST7735S::fillScreen(uint16_t color)
 
 void JST7735S::pushColor(uint16_t color, uint8_t count)
 {
-    uint8_t msb_color = color >> 8;
-    uint8_t lsb_color = color & 0xFF;
-
     _interfaceImplementation->selectDisplay();
     _interfaceImplementation->setDataMode();
-    SPI_SendData(_SPI, &msb_color, count);
-    SPI_SendData(_SPI, &lsb_color, count);
+    _interfaceImplementation->sendData(&color, count);
     _interfaceImplementation->waitUntilDataIsSent();
     _interfaceImplementation->deselectDisplay();
 }
