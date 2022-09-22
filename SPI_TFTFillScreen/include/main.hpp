@@ -5,9 +5,9 @@
 #include "config.hpp"
 #include "init.hpp"
 
-#if (_8BIT_MODE == 1)
+#ifdef _8BIT_MODE
     #include "tft/TFT8BitMode.hpp"
-#elif (_16BIT_MODE == 1)
+#elif defined(_16BIT_MODE)
     #include "tft/TFT16BitMode.hpp"
 #endif
 

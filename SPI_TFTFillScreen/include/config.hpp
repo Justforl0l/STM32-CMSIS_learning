@@ -34,5 +34,5 @@
 #define ST7735_WIDTH        128
 #define ST7735_HEIGHT       160
 
-#define _8BIT_MODE          1
-#define _16BIT_MODE         0
+// Может быть _8BIT_MODE или _16BIT_MODE
+#define _8BIT_MODE

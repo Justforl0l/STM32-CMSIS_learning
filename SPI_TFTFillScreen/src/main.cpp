@@ -50,9 +50,9 @@ int main()
         };
 
     JST7735S* display = new JST7735S(SPI2, commandList,
-                                     #if (_8BIT_MODE == 1)
+                                     #ifdef _8BIT_MODE
                                         new TFT8BitMode(SPI2),
-                                     #elif (_16BIT_MODE == 1)
+                                     #elif defined(_16BIT_MODE)
                                         new TFT16BitMode(SPI2),
                                      #endif
                                      delay);
