@@ -21,8 +21,16 @@ class UsartInterfaceImpl : public UsartInterface
         inline uint8_t receiveData();
         inline void setBaudrate(uint16_t mantissa, uint8_t fraction);
         inline void enableUsart();
+        inline void disableUsart();
+        inline void enableTransmitter();
+        inline void disableTransmitter();
+        inline void enableReceiver();
+        inline void disableReceiver();
         inline void setWordLength(uint8_t wordLength);
         inline void setParity(uint8_t parity);
+        inline void setStopBits(uint8_t stopBit);
+        inline void sendIdleFrame();
+        inline void sendBreakFrame();
 };
 
 UsartInterfaceImpl::UsartInterfaceImpl(USART_TypeDef* USARTx)
@@ -77,6 +85,31 @@ inline void UsartInterfaceImpl::enableUsart()
     _USART->CR1 |= USART_CR1_UE;
 }
 
+inline void UsartInterfaceImpl::disableUsart()
+{
+    _USART->CR1 &= ~(USART_CR1_UE_Msk);
+}
+
+inline void UsartInterfaceImpl::enableTransmitter()
+{
+    _USART->CR1 |= USART_CR1_TE;
+}
+
+inline void UsartInterfaceImpl::disableTransmitter()
+{
+    _USART->CR1 &= ~(USART_CR1_TE_Msk);
+}
+
+inline void UsartInterfaceImpl::enableReceiver()
+{
+    _USART->CR1 |= USART_CR1_RE;
+}
+
+inline void UsartInterfaceImpl::disableReceiver()
+{
+    _USART->CR1 &= ~(USART_CR1_RE_Msk);
+}
+
 inline void UsartInterfaceImpl::setWordLength(uint8_t wordLength)
 {
     _USART->CR1 |= (wordLength << 12);
@@ -85,4 +118,19 @@ inline void UsartInterfaceImpl::setWordLength(uint8_t wordLength)
 inline void UsartInterfaceImpl::setParity(uint8_t parity)
 {
     _USART->CR1 |= (parity << 9);
+}
+
+inline void UsartInterfaceImpl::setStopBits(uint8_t stopBit)
+{
+    _USART->CR2 |= ((stopBit & 0x3) << 12);
+}
+
+inline void UsartInterfaceImpl::sendIdleFrame()
+{
+    _USART->CR1 |= USART_CR1_TE;
+}
+
+inline void UsartInterfaceImpl::sendBreakFrame()
+{
+    _USART->CR1 |= USART_CR1_SBK;
 }
