@@ -84,7 +84,6 @@ void JST7735S::fillScreen(uint16_t color)
         }
         
     }
-    
 }
 
 void JST7735S::sendCommandOrData(uint8_t mode, uint16_t data, uint8_t count)
@@ -99,7 +98,7 @@ void JST7735S::sendCommandOrData(uint8_t mode, uint16_t data, uint8_t count)
     {
         _interfaceImplementation->setDataMode();
     }
-    
+
     _interfaceImplementation->sendData(&data, count);
     _interfaceImplementation->waitUntilDataIsSent();
     _interfaceImplementation->deselectDisplay();
