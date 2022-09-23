@@ -74,7 +74,7 @@ void JST7735S::fillScreen(uint16_t color)
 
     uint8_t ramwr = ST7735S_CMD_RAMWR;
     
-    sendCommandOrData(COMMAND_MODE, (uint16_t)&ramwr, 1);
+    sendCommandOrData(COMMAND_MODE, (uint16_t)ramwr, 1);
 
     for (x = 0; x < ST7735_WIDTH; x++)
     {
