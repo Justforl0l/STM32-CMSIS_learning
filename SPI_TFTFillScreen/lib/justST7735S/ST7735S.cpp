@@ -33,7 +33,7 @@ void JST7735S::_initDisplay()
         numberOfArgs = *_commandList++;
         ms = numberOfArgs & ST7735S_CMD_DELAY;
         numberOfArgs &= ~ST7735S_CMD_DELAY;
-        sendCommand(command, _commandList, numberOfArgs);
+        _sendFunctionCommand(command, _commandList, numberOfArgs);
         _commandList += numberOfArgs;
 
         if (ms)
@@ -48,23 +48,15 @@ void JST7735S::_initDisplay()
     }
 }
 
-void JST7735S::sendCommand(uint8_t command, const uint8_t *address,
-                           uint8_t numberOfArgs)
+void JST7735S::_sendFunctionCommand(uint8_t command, const uint8_t *address,
+                                    uint8_t numberOfArgs)
 {
-    _interfaceImplementation->selectDisplay();
-    _interfaceImplementation->setCommandMode();
-    _interfaceImplementation->sendData((uint16_t *)&command, 1);
-    _interfaceImplementation->waitUntilDataIsSent();
-    _interfaceImplementation->deselectDisplay();
+    sendCommandOrData(COMMAND_MODE, (uint16_t)command, 1);
     if (numberOfArgs)
     {
         while (numberOfArgs)
         {
-            _interfaceImplementation->selectDisplay();
-            _interfaceImplementation->setDataMode();
-            _interfaceImplementation->sendData((uint16_t *)address, 1);
-            _interfaceImplementation->waitUntilDataIsSent();
-            _interfaceImplementation->deselectDisplay();
+            sendCommandOrData(DATA_MODE, (uint16_t)*address, 1);
             address++;
             numberOfArgs--;
         }
@@ -81,28 +73,34 @@ void JST7735S::fillScreen(uint16_t color)
     uint8_t x, y;
 
     uint8_t ramwr = ST7735S_CMD_RAMWR;
-    _interfaceImplementation->selectDisplay();
-    _interfaceImplementation->setCommandMode();
-    _interfaceImplementation->sendData((uint16_t *)&ramwr, 1);
-    _interfaceImplementation->waitUntilDataIsSent();
-    _interfaceImplementation->deselectDisplay();
+    
+    sendCommandOrData(COMMAND_MODE, (uint16_t)&ramwr, 1);
 
     for (x = 0; x < ST7735_WIDTH; x++)
     {
         for (y = 0; y < ST7735_HEIGHT; y++)
         {
-            pushColor(color, 1);
+            sendCommandOrData(DATA_MODE, color, 1);
         }
         
     }
     
 }
 
-void JST7735S::pushColor(uint16_t color, uint8_t count)
+void JST7735S::sendCommandOrData(uint8_t mode, uint16_t data, uint8_t count)
 {
     _interfaceImplementation->selectDisplay();
-    _interfaceImplementation->setDataMode();
-    _interfaceImplementation->sendData(&color, count);
+
+    if (mode == COMMAND_MODE)
+    {
+        _interfaceImplementation->setCommandMode();
+    }
+    else if (mode == DATA_MODE)
+    {
+        _interfaceImplementation->setDataMode();
+    }
+    
+    _interfaceImplementation->sendData(&data, count);
     _interfaceImplementation->waitUntilDataIsSent();
     _interfaceImplementation->deselectDisplay();
 }
