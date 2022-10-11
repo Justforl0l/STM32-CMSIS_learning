@@ -58,3 +58,34 @@ inline void setupGpioA()
     GPIOA->CRL |= (GPIO_CRL_MODE1_1 | GPIO_CRL_MODE2_1 |
                    GPIO_CRL_MODE3_1 | GPIO_CRL_MODE4_1);
 }
+
+inline void enableSpiClock()
+{
+    RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
+}
+
+inline void setBaudRate(uint8_t prescaler)
+{
+    SPI2->CR1 |= prescaler;
+}
+
+inline void clearSpiSettings()
+{
+    SPI2->CR1 &= ~(SPI_CR1_CPHA | SPI_CR1_CPOL |
+                   SPI_CR1_DFF | SPI_CR1_LSBFIRST);
+}
+
+inline void configureNss()
+{
+    SPI2->CR1 |= (SPI_CR1_SSM | SPI_CR1_SSI);
+}
+
+inline void setMode()
+{
+    SPI2->CR1 |= SPI_CR1_MSTR;
+}
+
+inline void enableSpi()
+{
+    SPI2->CR1 |= SPI_CR1_SPE;
+}
