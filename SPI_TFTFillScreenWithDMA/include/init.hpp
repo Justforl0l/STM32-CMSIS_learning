@@ -33,3 +33,28 @@ inline void setupSystemClock()
     while(!(RCC->CFGR & RCC_CFGR_SWS_PLL));
     RCC->CR &= ~RCC_CR_HSION;
 }
+
+inline void enableGpioClocks()
+{
+    RCC->APB2ENR |= (RCC_APB2ENR_IOPBEN | RCC_APB2ENR_AFIOEN |
+                     RCC_APB2ENR_IOPAEN);
+}
+
+inline void setupGpioB()
+{
+    GPIOB->CRH &= ~(GPIO_CRH_CNF13_Msk | GPIO_CRH_CNF14_Msk |
+                    GPIO_CRH_CNF15_Msk | GPIO_CRH_CNF10_Msk);
+    GPIOB->CRH |= (GPIO_CRH_MODE13_1 | GPIO_CRH_CNF13_1 |
+                   GPIO_CRH_CNF14_1 |
+                   GPIO_CRH_MODE15_1 | GPIO_CRH_CNF15_1 |
+                   GPIO_CRH_CNF10_1);
+    GPIOB->BSRR |= (GPIO_BSRR_BS14 | GPIO_BSRR_BS10);
+}
+
+inline void setupGpioA()
+{
+    GPIOA->CRL &= ~(GPIO_CRL_CNF1_Msk | GPIO_CRL_CNF2_Msk |
+                    GPIO_CRL_CNF3_Msk | GPIO_CRL_CNF4_Msk);
+    GPIOA->CRL |= (GPIO_CRL_MODE1_1 | GPIO_CRL_MODE2_1 |
+                   GPIO_CRL_MODE3_1 | GPIO_CRL_MODE4_1);
+}
