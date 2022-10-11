@@ -5,6 +5,7 @@ void mcu_init()
     clock_init();
     gpio_init();
     spi_init();
+    dmaInit();
     SysTick_Config(TIMERTICK);
 }
 
@@ -32,4 +33,14 @@ void spi_init()
     configureNss();
     setMode();
     enableSpi();
+}
+
+void dmaInit()
+{
+    setPeripheralAddress();
+    setMemoryAddress();
+    setNumberOfTransfers();
+    setChannelPriority();
+    configureDMAProperties();
+    enableDMA();
 }

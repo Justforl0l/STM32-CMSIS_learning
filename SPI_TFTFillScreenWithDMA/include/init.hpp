@@ -8,6 +8,7 @@ void mcu_init();
 void clock_init();
 void gpio_init();
 void spi_init();
+void dmaInit();
 
 inline void enableHse()
 {
@@ -88,4 +89,34 @@ inline void setMode()
 inline void enableSpi()
 {
     SPI2->CR1 |= SPI_CR1_SPE;
+}
+
+inline void setPeripheralAddress()
+{
+    return;
+}
+
+inline void setMemoryAddress()
+{
+    return;
+}
+
+inline void setNumberOfTransfers()
+{
+    return;
+}
+
+inline void setChannelPriority()
+{
+    return;
+}
+
+inline void configureDMAProperties()
+{
+    return;
+}
+
+inline void enableDMA()
+{
+    return;
 }
