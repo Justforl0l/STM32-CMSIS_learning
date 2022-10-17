@@ -115,15 +115,16 @@ inline void setNumberOfTransfers()
 
 inline void setChannelPriority()
 {
-    return;
+    DMA1_Channel5->CCR |= DMA_Priority_VeryHigh;
 }
 
 inline void configureDMAProperties()
 {
-    return;
+    DMA1_Channel5->CCR |= (DMA_CCR_DIR | DMA_MemorySize_16Bits |
+                           DMA_PeripheralSize_16Bits | DMA_CCR_MINC);
 }
 
 inline void enableDMA()
 {
-    return;
+    DMA1_Channel5->CCR |= DMA_CCR_EN;
 }

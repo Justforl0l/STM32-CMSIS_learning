@@ -11,5 +11,13 @@
 #define DMA_Priority_Medium                 (0x1 << 12)
 #define DMA_Priority_Low                    0
 
+#define DMA_MemorySize_8Bits                0
+#define DMA_MemorySize_16Bits               (0x1 << 10)
+#define DMA_MemorySize_32Bits               (0x1 << 11)
+
+#define DMA_PeripheralSize_8Bits            0
+#define DMA_PeripheralSize_16Bits           (0x1 << 8)
+#define DMA_PeripheralSize_32Bits           (0x1 << 9)
+
 #define ST7735S_WIDTH       128
 #define ST7735S_HEIGHT      160
