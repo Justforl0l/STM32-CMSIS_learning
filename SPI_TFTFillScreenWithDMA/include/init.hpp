@@ -4,6 +4,8 @@
 
 #include "config.hpp"
 
+extern uint16_t const colors[];
+
 void mcu_init();
 void clock_init();
 void gpio_init();
@@ -93,12 +95,12 @@ inline void enableSpi()
 
 inline void setPeripheralAddress()
 {
-    return;
+    DMA1_Channel5->CPAR = (uint32_t)SPI2->DR;
 }
 
 inline void setMemoryAddress()
 {
-    return;
+    DMA1_Channel5->CMAR = (uint32_t)colors;
 }
 
 inline void setNumberOfTransfers()
