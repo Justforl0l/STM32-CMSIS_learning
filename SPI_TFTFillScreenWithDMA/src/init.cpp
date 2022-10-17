@@ -30,6 +30,7 @@ void spi_init()
     enableSpiClock();
     setBaudRate(SPI_BaudRate_Prescaler_2);
     clearSpiSettings();
+    set16BitMode();
     configureNss();
     setMode();
     enableSpi();

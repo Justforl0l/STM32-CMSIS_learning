@@ -78,6 +78,11 @@ inline void clearSpiSettings()
                    SPI_CR1_DFF | SPI_CR1_LSBFIRST);
 }
 
+inline void set16BitMode()
+{
+    SPI2->CR1 |= SPI_CR1_DFF;
+}
+
 inline void configureNss()
 {
     SPI2->CR1 |= (SPI_CR1_SSM | SPI_CR1_SSI);
