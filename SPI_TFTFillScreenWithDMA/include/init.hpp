@@ -110,7 +110,7 @@ inline void setMemoryAddress()
 
 inline void setNumberOfTransfers()
 {
-    return;
+    DMA1_Channel5->CNDTR = (ST7735S_WIDTH * ST7735S_HEIGHT);
 }
 
 inline void setChannelPriority()
