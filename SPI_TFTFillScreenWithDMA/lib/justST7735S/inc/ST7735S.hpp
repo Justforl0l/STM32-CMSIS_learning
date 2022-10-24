@@ -45,6 +45,8 @@ class JST7735S
         void fillScreen(uint16_t color);
         void sendCommandOrData(uint8_t mode, uint16_t color, uint8_t count);
         void noOperation();
+        void select();
+        void deselect();
 };
 
 inline void JST7735S::_initBacklightPin()

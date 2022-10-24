@@ -108,3 +108,13 @@ void JST7735S::noOperation()
 {
     __NOP();
 }
+
+void JST7735S::select()
+{
+    _interfaceImplementation->selectDisplay();
+}
+
+void JST7735S::deselect()
+{
+    _interfaceImplementation->deselectDisplay();
+}
