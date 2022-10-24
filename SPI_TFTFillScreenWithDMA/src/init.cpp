@@ -4,8 +4,8 @@ void mcu_init()
 {
     clock_init();
     gpio_init();
-    spi_init();
     dmaInit();
+    spi_init();
     SysTick_Config(TIMERTICK);
 }
 
