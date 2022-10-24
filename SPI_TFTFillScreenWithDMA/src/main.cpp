@@ -55,7 +55,9 @@ int main()
 
     for(;;)
     {
-        display->noOperation();
+        display->select();
+        delay(500);
+        display->deselect();
     }
 }
 
