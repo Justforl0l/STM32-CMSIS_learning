@@ -38,6 +38,7 @@ void spi_init()
 
 void dmaInit()
 {
+    enableDMAClock();
     setPeripheralAddress();
     setMemoryAddress();
     setNumberOfTransfers();

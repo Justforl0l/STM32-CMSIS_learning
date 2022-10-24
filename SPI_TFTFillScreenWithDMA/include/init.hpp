@@ -98,6 +98,11 @@ inline void enableSpi()
     SPI2->CR1 |= SPI_CR1_SPE;
 }
 
+inline void enableDMAClock()
+{
+    RCC->AHBENR |= RCC_AHBENR_DMA1EN;
+}
+
 inline void setPeripheralAddress()
 {
     DMA1_Channel5->CPAR = (uint32_t)SPI2->DR;
