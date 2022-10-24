@@ -21,6 +21,16 @@ volatile uint32_t TICK = 0;
 
 void delay(uint32_t delay_ms);
 
+inline void enableDMA()
+{
+    DMA1_Channel5->CCR |= DMA_CCR_EN;
+}
+
+inline bool isDMAEnabled()
+{
+    return ((DMA1_Channel5->CCR & DMA_CCR_EN_Msk) >> DMA_CCR_EN_Pos);
+}
+
 #ifdef __cplusplus
 extern "C"
 {

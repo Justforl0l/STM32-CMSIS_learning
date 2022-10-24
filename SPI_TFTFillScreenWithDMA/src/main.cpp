@@ -56,7 +56,8 @@ int main()
     for(;;)
     {
         display->select();
-        delay(500);
+        enableDMA();
+        while (isDMAEnabled());
         display->deselect();
     }
 }
