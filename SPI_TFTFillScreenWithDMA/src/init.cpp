@@ -33,6 +33,7 @@ void spi_init()
     set16BitMode();
     configureNss();
     setMode();
+    enableTxDMABuffer();
     enableSpi();
 }
 
@@ -44,5 +45,4 @@ void dmaInit()
     setNumberOfTransfers();
     setChannelPriority();
     configureDMAProperties();
-    enableDMA();
 }

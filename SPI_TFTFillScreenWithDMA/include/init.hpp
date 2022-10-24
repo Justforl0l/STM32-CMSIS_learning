@@ -93,6 +93,11 @@ inline void setMode()
     SPI2->CR1 |= SPI_CR1_MSTR;
 }
 
+inline void enableTxDMABuffer()
+{
+    SPI2->CR2 |= SPI_CR2_TXDMAEN;
+}
+
 inline void enableSpi()
 {
     SPI2->CR1 |= SPI_CR1_SPE;
@@ -105,7 +110,7 @@ inline void enableDMAClock()
 
 inline void setPeripheralAddress()
 {
-    DMA1_Channel5->CPAR = (uint32_t)SPI2->DR;
+    DMA1_Channel5->CPAR = (uint32_t)&(SPI2->DR);
 }
 
 inline void setMemoryAddress()
@@ -126,10 +131,6 @@ inline void setChannelPriority()
 inline void configureDMAProperties()
 {
     DMA1_Channel5->CCR |= (DMA_CCR_DIR | DMA_MemorySize_16Bits |
-                           DMA_PeripheralSize_16Bits | DMA_CCR_MINC);
-}
-
-inline void enableDMA()
-{
-    DMA1_Channel5->CCR |= DMA_CCR_EN;
+                           DMA_PeripheralSize_16Bits | DMA_CCR_MINC |
+                           DMA_CCR_TCIE);
 }
