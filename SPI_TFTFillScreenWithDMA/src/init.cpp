@@ -40,6 +40,7 @@ void spi_init()
 void dmaInit()
 {
     enableDMAClock();
+    NVIC_EnableIRQ(DMA1_Channel5_IRQn);
     setPeripheralAddress();
     setMemoryAddress();
     setNumberOfTransfers();
