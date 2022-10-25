@@ -2,6 +2,10 @@
 
 #include "stm32f103xb.h"
 
+#include <inc/ST7735S.hpp>
+
+extern JST7735S *display;
+
 inline void disableDMA()
 {
     DMA1_Channel5->CCR &= ~(DMA_CCR_EN);

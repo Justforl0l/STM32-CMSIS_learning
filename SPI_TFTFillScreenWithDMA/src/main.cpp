@@ -57,8 +57,8 @@ int main()
     {
         display->select();
         enableDMA();
+        enableTxDMABuffer();
         while (isDMAEnabled());
-        display->deselect();
     }
 }
 

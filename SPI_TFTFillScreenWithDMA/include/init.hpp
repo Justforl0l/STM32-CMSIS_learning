@@ -93,11 +93,6 @@ inline void setMode()
     SPI2->CR1 |= SPI_CR1_MSTR;
 }
 
-inline void enableTxDMABuffer()
-{
-    SPI2->CR2 |= SPI_CR2_TXDMAEN;
-}
-
 inline void enableSpi()
 {
     SPI2->CR1 |= SPI_CR1_SPE;

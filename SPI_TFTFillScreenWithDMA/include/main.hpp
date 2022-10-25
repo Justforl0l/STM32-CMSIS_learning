@@ -26,6 +26,11 @@ inline void enableDMA()
     DMA1_Channel5->CCR |= DMA_CCR_EN;
 }
 
+inline void enableTxDMABuffer()
+{
+    SPI2->CR2 |= SPI_CR2_TXDMAEN;
+}
+
 inline bool isDMAEnabled()
 {
     return ((DMA1_Channel5->CCR & DMA_CCR_EN_Msk) >> DMA_CCR_EN_Pos);
