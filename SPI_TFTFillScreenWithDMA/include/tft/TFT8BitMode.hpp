@@ -14,7 +14,7 @@ class TFT8BitMode : public TFTBaseInterfaceImpl
 
 inline void TFT8BitMode::sendData(uint16_t* data, uint8_t count)
 {
-    while (!count)
+    while (count)
     {
         if (data)
         {
