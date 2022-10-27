@@ -101,5 +101,6 @@ void JST7735S::sendCommandOrData(uint8_t mode, uint16_t data, uint8_t count)
 
     _interfaceImplementation->sendData(&data, count);
     _interfaceImplementation->waitUntilDataIsSent();
+    _interfaceImplementation->waitUntilTransmissionComplete();
     _interfaceImplementation->deselectDisplay();
 }

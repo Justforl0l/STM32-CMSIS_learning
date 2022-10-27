@@ -7,6 +7,7 @@ class TFTInterface
         virtual void setCommandMode() = 0;
         virtual void setDataMode() = 0;
         virtual void waitUntilDataIsSent() = 0;
+        virtual void waitUntilTransmissionComplete() = 0;
         virtual void toggleBacklight() = 0;
         virtual void selectDisplay() = 0;
         virtual void deselectDisplay() = 0;
