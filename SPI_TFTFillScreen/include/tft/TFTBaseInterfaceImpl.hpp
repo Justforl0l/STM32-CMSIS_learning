@@ -47,7 +47,7 @@ inline void TFTBaseInterfaceImpl::waitUntilDataIsSent()
 
 inline void TFTBaseInterfaceImpl::waitUntilTransmissionComplete()
 {
-    while (!(_SPI->SR & SPI_SR_BSY_Msk));
+    while (_SPI->SR & SPI_SR_BSY_Msk);
 }
 
 inline void TFTBaseInterfaceImpl::toggleBacklight()
