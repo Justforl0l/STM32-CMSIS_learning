@@ -18,6 +18,7 @@ class TFTBaseInterfaceImpl : public TFTInterface
         inline void deselectDisplay() override;
         inline void resetDisplay() override;
         inline void enableDisplay() override;
+        virtual void sendData(uint8_t* data, uint8_t count) = 0;
         virtual void sendData(uint16_t* data, uint8_t count) = 0;
 
     protected:

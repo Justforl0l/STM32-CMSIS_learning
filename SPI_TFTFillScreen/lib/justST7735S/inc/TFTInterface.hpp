@@ -14,6 +14,7 @@ class TFTInterface
         virtual void resetDisplay() = 0;
         virtual void enableDisplay() = 0;
         virtual void sendData(uint16_t* data, uint8_t count) = 0;
+        virtual void sendData(uint8_t* data, uint8_t count) = 0;
 
     protected:
         TFTInterface() = default;

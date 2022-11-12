@@ -43,7 +43,8 @@ class JST7735S
         void waitUntilDataIsSent();
         void toggleBacklight();
         void fillScreen(uint16_t color);
-        void sendCommandOrData(uint8_t mode, uint16_t color, uint8_t count);
+        void sendCommandOrData(uint8_t mode, uint8_t *color, uint8_t count);
+        void sendCommandOrData(uint8_t mode, uint16_t *color, uint8_t count);
 };
 
 inline void JST7735S::_initBacklightPin()

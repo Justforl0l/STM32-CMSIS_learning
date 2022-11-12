@@ -19,7 +19,7 @@ inline void TFT16BitMode::sendData(uint16_t* data, uint8_t count)
         waitUntilDataIsSent();
         if (data)
         {
-            _SPI->DR = *data++;
+            _SPI->DR = *data;
         }
         else
         {
