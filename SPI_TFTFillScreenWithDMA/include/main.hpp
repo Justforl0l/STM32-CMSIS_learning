@@ -5,7 +5,7 @@
 #include "config.hpp"
 #include "tft/colors.hpp"
 #include "tft/commands.hpp"
-#include "tft/TFT16BitMode.hpp"
+#include "tft/TFT8BitMode.hpp"
 
 #include <inc/ST7735S.hpp>
 
@@ -16,6 +16,9 @@ extern uint16_t const colors[] = {
 };
 
 #include "init.hpp"
+#include "interrupts.hpp"
+
+JST7735S *display;
 
 volatile uint32_t TICK = 0;
 

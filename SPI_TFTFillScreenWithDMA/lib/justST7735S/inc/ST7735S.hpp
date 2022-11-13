@@ -3,8 +3,8 @@
 #include "stm32f103xb.h"
 
 #include "config.hpp"
-#include "tft/colors.hpp"
-#include "tft/commands.hpp"
+#include "colors.hpp"
+#include "commands.hpp"
 #include "TFTInterface.hpp"
 
 #ifndef ST7735_WIDTH
@@ -43,7 +43,8 @@ class JST7735S
         void waitUntilDataIsSent();
         void toggleBacklight();
         void fillScreen(uint16_t color);
-        void sendCommandOrData(uint8_t mode, uint16_t color, uint8_t count);
+        void sendCommandOrData(uint8_t mode, uint8_t *color, uint8_t count);
+        void sendCommandOrData(uint8_t mode, uint16_t *color, uint8_t count);
         void noOperation();
         void select();
         void deselect();

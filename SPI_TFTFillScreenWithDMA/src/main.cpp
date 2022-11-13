@@ -49,8 +49,8 @@ int main()
 {
     mcu_init();
 
-    JST7735S* display = new JST7735S(SPI2, commandList,
-                                     new TFT16BitMode(SPI2),
+    JST7735S *display = new JST7735S(SPI2, commandList,
+                                     new TFT8BitMode(SPI2),
                                      delay);
 
     for(;;)
